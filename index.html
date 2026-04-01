@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shooter Game - A fun target shooting game with multiple levels, guns, and targets.">
+    <title>Shooter Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- welcome screen -->
+    <div id="welcome-screen">
+        <div class="welcome-container">
+            <div class="welcome-header">
+                <img src="image/shooter.png" alt="Shooter Logo" class="welcome-logo">
+                <h1 class="welcome-title">GAME SHOOTER</h1>
+            </div>
+
+            <div class="welcome-form">
+                <input type="text" id="username-input" placeholder="Input Username" autocomplete="off">
+
+                <select id="level-select">
+                    <option value="" disabled selected>Select Level</option>
+                    <option value="easy">Easy (30s)</option>
+                    <option value="medium">Medium (20s)</option>
+                    <option value="hard">Hard (15s)</option>
+                </select>
+
+                <div class="selection-group">
+                    <h3>Choose Your Gun</h3>
+                    <div class="options-row">
+                        <label class="option-card" id="gun-option-1">
+                            <input type="radio" name="gun" value="gun1">
+                            <img src="image/gun1.png" alt="Gun 1">
+                            <span class="option-label">Desert Eagle</span>
+                        </label>
+                        <label class="option-card" id="gun-option-2">
+                            <input type="radio" name="gun" value="gun2">
+                            <img src="image/gun2.png" alt="Gun 2">
+                            <span class="option-label">USP Tactical</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="selection-group">
+                    <h3>Choose Your Target</h3>
+                    <div class="options-row">
+                        <label class="option-card" id="target-option-1">
+                            <input type="radio" name="target" value="target1">
+                            <img src="image/target1.png" alt="Target 1">
+                            <span class="option-label">Bullseye</span>
+                        </label>
+                        <label class="option-card" id="target-option-2">
+                            <input type="radio" name="target" value="target2">
+                            <img src="image/target2.png" alt="Target 2">
+                            <span class="option-label">Dartboard</span>
+                        </label>
+                        <label class="option-card" id="target-option-3">
+                            <input type="radio" name="target" value="target3">
+                            <img src="image/target3.png" alt="Target 3">
+                            <span class="option-label">Classic</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="welcome-buttons">
+                    <button id="play-btn" disabled>Play Game</button>
+                    <button id="instruction-btn">Instruction</button>
+                    <button id="history-btn">Match History</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- instruction modal -->
+    <div id="instruction-modal" class="modal-overlay hidden">
+        <div class="modal-content instruction-content">
+            <button id="instruction-close" class="modal-close">&times;</button>
+            <h2>How to Play</h2>
+            <div class="instruction-list">
+                <div class="instruction-item">
+                    <span class="instruction-num">1</span>
+                    <p>Input your username and select level, gun, and target.</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">2</span>
+                    <p>Point the crosshair pointer at the targets.</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">3</span>
+                    <p>Click to shoot the targets and earn points!</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">4</span>
+                    <p>Missing a target costs you <strong>5 seconds</strong> penalty.</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">5</span>
+                    <p>Press <kbd>Space</kbd> to switch guns during gameplay.</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">6</span>
+                    <p>Press <kbd>Esc</kbd> to pause/resume the game.</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-num">7</span>
+                    <p>Get as many points as possible before time runs out!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- countdown overlay -->
+    <div id="countdown-overlay" class="hidden">
+        <div id="countdown-number">3</div>
+    </div>
+
+    <!-- game area -->
+    <div id="game-area" class="hidden">
+        <!-- HUD -->
+        <div id="game-hud">
+            <div class="hud-item">
+                <span class="hud-label">Player</span>
+                <span id="hud-username" class="hud-value">Player</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Score</span>
+                <span id="hud-score" class="hud-value">0</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Time</span>
+                <span id="hud-timer" class="hud-value">00:30</span>
+            </div>
+            <div class="hud-item hud-pause">
+                <button id="pause-btn" title="Pause (Esc)">⏸</button>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <div id="game-canvas">
+            <!-- Targets will be spawned here -->
+        </div>
+
+        <!-- Gun -->
+        <div id="gun-container">
+            <img id="game-gun" src="image/gun1.png" alt="Gun">
+        </div>
+
+        <!-- Custom Pointer -->
+        <img id="game-pointer" src="image/pointer.png" alt="Crosshair">
+
+        <!-- Leaderboard Sidebar -->
+        <div id="leaderboard-sidebar">
+            <h3>LEADERBOARD</h3>
+            <select id="sort-select">
+                <option value="score">Sort By Score</option>
+                <option value="date">Sort By Latest</option>
+            </select>
+            <div id="leaderboard-list"></div>
+        </div>
+    </div>
+
+    <!-- pause modal -->
+    <div id="pause-modal" class="modal-overlay hidden">
+        <div class="modal-content pause-content">
+            <h2>⏸ Game Paused</h2>
+            <p>Press <kbd>Esc</kbd> or click Continue to resume.</p>
+            <div class="modal-buttons">
+                <button id="continue-btn" class="btn-primary">Continue</button>
+                <button id="quit-btn" class="btn-danger">Quit Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- game over modal -->
+    <div id="gameover-modal" class="modal-overlay hidden">
+        <div class="modal-content gameover-content">
+            <h2>🎯 Game Over!</h2>
+            <div class="gameover-stats">
+                <div class="stat-row">
+                    <span>Player</span>
+                    <span id="go-username">-</span>
+                </div>
+                <div class="stat-row">
+                    <span>Score</span>
+                    <span id="go-score">0</span>
+                </div>
+                <div class="stat-row">
+                    <span>Level</span>
+                    <span id="go-level">-</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="save-score-btn" class="btn-primary">Save Score</button>
+                <button id="restart-btn" class="btn-secondary">Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- match history modal -->
+    <div id="history-modal" class="modal-overlay hidden">
+        <div class="modal-content history-content">
+            <button id="history-close" class="modal-close">&times;</button>
+            <h2>📋 Match History</h2>
+            <div class="history-controls">
+                <select id="history-sort">
+                    <option value="score">Sort by Score</option>
+                    <option value="date">Sort by Latest</option>
+                </select>
+            </div>
+            <div id="history-list"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
