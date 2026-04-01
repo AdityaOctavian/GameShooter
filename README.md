@@ -1,6 +1,6 @@
 # Shooter Game
 
-Game tembak-tembakan berbasis web yang dibuat menggunakan HTML, CSS, dan JavaScript murni tanpa framework.
+Game tembak-tembakan berbasis web yang dibuat menggunakan HTML, CSS, dan JavaScript.
 
 ## Fitur
 
@@ -30,9 +30,9 @@ Game tembak-tembakan berbasis web yang dibuat menggunakan HTML, CSS, dan JavaScr
 
 ## Teknologi
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
+- HTML
+- CSS
+- JavaScript
 - localStorage untuk menyimpan data
 
 ## Struktur File
