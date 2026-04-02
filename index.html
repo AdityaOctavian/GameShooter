@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- welcome screen -->
     <div id="welcome-screen">
         <div class="welcome-container">
             <div class="welcome-header">
@@ -73,7 +72,6 @@
         </div>
     </div>
 
-    <!-- instruction modal -->
     <div id="instruction-modal" class="modal-overlay hidden">
         <div class="modal-content instruction-content">
             <button id="instruction-close" class="modal-close">&times;</button>
@@ -111,14 +109,12 @@
         </div>
     </div>
 
-    <!-- countdown overlay -->
     <div id="countdown-overlay" class="hidden">
         <div id="countdown-number">3</div>
     </div>
 
-    <!-- game area -->
     <div id="game-area" class="hidden">
-        <!-- HUD -->
+ 
         <div id="game-hud">
             <div class="hud-item">
                 <span class="hud-label">Player</span>
@@ -137,20 +133,16 @@
             </div>
         </div>
 
-        <!-- Game Canvas -->
         <div id="game-canvas">
             <!-- Targets will be spawned here -->
         </div>
 
-        <!-- Gun -->
         <div id="gun-container">
             <img id="game-gun" src="image/gun1.png" alt="Gun">
         </div>
 
-        <!-- Custom Pointer -->
         <img id="game-pointer" src="image/pointer.png" alt="Crosshair">
 
-        <!-- Leaderboard Sidebar -->
         <div id="leaderboard-sidebar">
             <h3>LEADERBOARD</h3>
             <select id="sort-select">
@@ -161,7 +153,6 @@
         </div>
     </div>
 
-    <!-- pause modal -->
     <div id="pause-modal" class="modal-overlay hidden">
         <div class="modal-content pause-content">
             <h2>⏸ Game Paused</h2>
@@ -173,7 +164,6 @@
         </div>
     </div>
 
-    <!-- game over modal -->
     <div id="gameover-modal" class="modal-overlay hidden">
         <div class="modal-content gameover-content">
             <h2>🎯 Game Over!</h2>
@@ -198,7 +188,6 @@
         </div>
     </div>
 
-    <!-- match history modal -->
     <div id="history-modal" class="modal-overlay hidden">
         <div class="modal-content history-content">
             <button id="history-close" class="modal-close">&times;</button>
