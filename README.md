@@ -57,4 +57,4 @@ GameShooter/
 
 ## Cara Menjalankan
 
-Buka file `index.html` di browser.
+Buka file `index.html` di browser atau bisa langsung click ini  https://adityaoctavian.github.io/GameShooter/
