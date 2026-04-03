@@ -1,6 +1,6 @@
 # Shooter Game
 
-Game tembak-tembakan berbasis web yang dibuat menggunakan HTML, CSS, dan JavaScript.
+Game tembak-tembakan berbasis web yang dibuat menggunakan HTML, CSS, dan JavaScript(UNTUK TUGAS LKS).
 
 ## Fitur
 
