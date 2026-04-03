@@ -14,7 +14,6 @@ body {
     user-select: none;
 }
 
-/* welcome screen */
 #welcome-screen {
     position: fixed;
     top: 0;
@@ -57,7 +56,6 @@ body {
     margin-top: 8px;
 }
 
-/* form */
 .welcome-form {
     display: flex;
     flex-direction: column;
@@ -91,7 +89,6 @@ body {
     color: #ddd;
 }
 
-/* gun dan target options */
 .selection-group {
     margin-top: 4px;
 }
@@ -156,7 +153,6 @@ body {
     color: #cc3333;
 }
 
-/* buttons */
 .welcome-buttons {
     display: flex;
     gap: 10px;
@@ -210,7 +206,6 @@ body {
     background: #2a5588;
 }
 
-/* modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -308,7 +303,6 @@ body {
     background: #aa2222;
 }
 
-/* instruction */
 .instruction-list {
     display: flex;
     flex-direction: column;
@@ -357,7 +351,6 @@ body {
     color: #ccaa00;
 }
 
-/* countdown */
 #countdown-overlay {
     position: fixed;
     top: 0;
@@ -377,7 +370,6 @@ body {
     color: white;
 }
 
-/* game area */
 #game-area {
     position: fixed;
     top: 0;
@@ -387,7 +379,6 @@ body {
     cursor: none;
 }
 
-/* hud */
 #game-hud {
     position: absolute;
     top: 0;
@@ -469,7 +460,6 @@ body {
     border-color: #cc3333;
 }
 
-/* game canvas */
 #game-canvas {
     position: absolute;
     top: 52px;
@@ -480,7 +470,6 @@ body {
     overflow: hidden;
 }
 
-/* target */
 .target {
     position: absolute;
     width: 90px;
@@ -513,7 +502,6 @@ body {
     }
 }
 
-/* boom */
 .boom-effect {
     position: absolute;
     width: 80px;
@@ -535,7 +523,6 @@ body {
     }
 }
 
-/* miss text */
 .miss-effect {
     position: absolute;
     color: #cc3333;
@@ -558,7 +545,6 @@ body {
     }
 }
 
-/* score popup */
 .score-popup {
     position: absolute;
     color: #ccaa00;
@@ -581,7 +567,6 @@ body {
     }
 }
 
-/* gun */
 #gun-container {
     position: fixed;
     bottom: -20px;
@@ -633,7 +618,6 @@ body {
     }
 }
 
-/* crosshair */
 #game-pointer {
     position: fixed;
     width: 40px;
@@ -644,7 +628,6 @@ body {
     display: none;
 }
 
-/* leaderboard sidebar */
 #leaderboard-sidebar {
     position: absolute;
     top: 0;
@@ -739,7 +722,6 @@ body {
     opacity: 0.85;
 }
 
-/* game over */
 .gameover-stats {
     display: flex;
     flex-direction: column;
@@ -770,7 +752,6 @@ body {
     font-weight: 800;
 }
 
-/* match history */
 .history-content {
     max-width: 600px;
     max-height: 80vh;
@@ -847,7 +828,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* pause */
 .pause-content {
     text-align: center;
 }
@@ -874,12 +854,10 @@ body {
     color: #ccaa00;
 }
 
-/* detail modal */
 .detail-content {
     max-width: 400px;
 }
 
-/* penalty flash */
 .penalty-flash {
     position: fixed;
     top: 0;
@@ -902,7 +880,6 @@ body {
     }
 }
 
-/* muzzle flash */
 .muzzle-flash {
     position: fixed;
     width: 100vw;
@@ -925,7 +902,6 @@ body {
     }
 }
 
-/* utility */
 .hidden {
     display: none !important;
 }
