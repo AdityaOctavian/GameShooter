@@ -1,4 +1,3 @@
-// data game
 var username = '';
 var level = '';
 var selectedGun = '';
@@ -14,7 +13,6 @@ var timerInterval = null;
 var spawnInterval = null;
 var matchHistory = JSON.parse(localStorage.getItem('shooterMatchHistory')) || [];
 
-// pengaturan level
 var levelTimes = { easy: 30, medium: 20, hard: 15 };
 var scorePerHit = 10;
 var penaltySeconds = 5;
@@ -22,7 +20,6 @@ var spawnIntervalMs = 3000;
 var initialTargets = 3;
 var targetSize = 90;
 
-// ambil elemen dom
 var welcomeScreen = document.getElementById('welcome-screen');
 var usernameInput = document.getElementById('username-input');
 var levelSelect = document.getElementById('level-select');
@@ -32,21 +29,17 @@ var historyBtn = document.getElementById('history-btn');
 
 var instructionModal = document.getElementById('instruction-modal');
 var instructionClose = document.getElementById('instruction-close');
-
 var countdownOverlay = document.getElementById('countdown-overlay');
 var countdownNumber = document.getElementById('countdown-number');
-
 var gameArea = document.getElementById('game-area');
 var gameCanvas = document.getElementById('game-canvas');
 var gameGun = document.getElementById('game-gun');
 var gunContainer = document.getElementById('gun-container');
 var gamePointer = document.getElementById('game-pointer');
-
 var hudUsername = document.getElementById('hud-username');
 var hudScore = document.getElementById('hud-score');
 var hudTimer = document.getElementById('hud-timer');
 var pauseBtn = document.getElementById('pause-btn');
-
 var sortSelect = document.getElementById('sort-select');
 var leaderboardList = document.getElementById('leaderboard-list');
 
@@ -66,8 +59,6 @@ var historyClose = document.getElementById('history-close');
 var historySort = document.getElementById('history-sort');
 var historyList = document.getElementById('history-list');
 
-
-// inisialisasi
 document.addEventListener('DOMContentLoaded', function () {
     setupWelcome();
     setupModals();
@@ -76,13 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
     instructionModal.classList.remove('hidden');
 });
 
-
-// welcome screen
 function setupWelcome() {
     usernameInput.addEventListener('input', validateForm);
     levelSelect.addEventListener('change', validateForm);
 
-    // Pilih senjata
     var gunRadios = document.querySelectorAll('input[name="gun"]');
     for (var i = 0; i < gunRadios.length; i++) {
         gunRadios[i].addEventListener('change', function (e) {
@@ -98,8 +86,6 @@ function setupWelcome() {
             validateForm();
         });
     }
-
-    // Pilih target
     var targetRadios = document.querySelectorAll('input[name="target"]');
     for (var i = 0; i < targetRadios.length; i++) {
         targetRadios[i].addEventListener('change', function (e) {
@@ -115,31 +101,23 @@ function setupWelcome() {
         });
     }
 
-    // Tombol play
     playBtn.addEventListener('click', startCountdown);
-
-    // Tombol instruksi
     instructionBtn.addEventListener('click', function () {
         instructionModal.classList.remove('hidden');
     });
 
-    // Tombol history
     historyBtn.addEventListener('click', function () {
         renderMatchHistory();
         historyModal.classList.remove('hidden');
     });
 }
 
-// Validasi form - semua harus terisi
 function validateForm() {
     var name = usernameInput.value.trim();
     var lvl = levelSelect.value;
     var isValid = name.length > 0 && lvl !== '' && selectedGun !== '' && selectedTarget !== '';
     playBtn.disabled = !isValid;
 }
-
-
-// modal listeners
 function setupModals() {
     instructionClose.addEventListener('click', function () {
         instructionModal.classList.add('hidden');
@@ -162,17 +140,12 @@ function setupModals() {
         renderLeaderboard();
     });
 }
-
-
-// countdown
 function startCountdown() {
-    // Simpan pengaturan
     username = usernameInput.value.trim();
     level = levelSelect.value;
     currentGunIndex = gunList.indexOf(selectedGun);
     if (currentGunIndex === -1) currentGunIndex = 0;
-
-    // Sembunyikan welcome, tampilkan countdown
+    
     welcomeScreen.classList.add('hidden');
     countdownOverlay.classList.remove('hidden');
 
@@ -194,10 +167,9 @@ function startCountdown() {
 function resumeCountdown() {
     pauseModal.classList.add('hidden');
     countdownOverlay.classList.remove('hidden');
-
+    
     var count = 3;
     countdownNumber.textContent = count;
-
     var interval = setInterval(function () {
         count--;
         if (count <= 0) {
@@ -209,37 +181,24 @@ function resumeCountdown() {
         }
     }, 1000);
 }
-
-
-// mulai game
 function startGame() {
     score = 0;
     maxTime = levelTimes[level];
     timeLeft = maxTime;
     isPlaying = true;
     isPaused = false;
-
-    // Setup HUD
     hudUsername.textContent = username;
     hudScore.textContent = score;
     updateTimerDisplay();
 
-    // Set gambar senjata
     gameGun.src = 'image/' + gunList[currentGunIndex] + '.png';
-
-    // Tampilkan game area
     gameArea.classList.remove('hidden');
     gamePointer.style.display = 'block';
-
-    // Bersihkan target sebelumnya
     gameCanvas.innerHTML = '';
 
-    // Spawn target awal
     for (var i = 0; i < initialTargets; i++) {
         spawnTarget();
     }
-
-    // Mulai timer
     timerInterval = setInterval(function () {
         if (!isPaused && isPlaying) {
             timeLeft--;
@@ -249,8 +208,6 @@ function startGame() {
             }
         }
     }, 1000);
-
-    // Spawn target berkala
     spawnInterval = setInterval(function () {
         if (!isPaused && isPlaying) {
             spawnTarget();
@@ -260,8 +217,6 @@ function startGame() {
     renderLeaderboard();
 }
 
-
-// timer display
 function updateTimerDisplay() {
     var t = Math.max(0, timeLeft);
     var minutes = Math.floor(t / 60);
@@ -270,16 +225,12 @@ function updateTimerDisplay() {
     var ss = seconds < 10 ? '0' + seconds : '' + seconds;
     hudTimer.textContent = mm + ':' + ss;
 
-    // Peringatan saat waktu hampir habis
     if (timeLeft <= 5) {
         hudTimer.classList.add('warning');
     } else {
         hudTimer.classList.remove('warning');
     }
 }
-
-
-// spawn target
 function spawnTarget() {
     if (!isPlaying) return;
 
@@ -299,8 +250,6 @@ function spawnTarget() {
     img.src = 'image/' + selectedTarget + '.png';
     img.alt = 'Target';
     target.appendChild(img);
-
-    // Klik target = hit
     target.addEventListener('click', function (e) {
         e.stopPropagation();
         if (!isPlaying || isPaused) return;
@@ -309,17 +258,13 @@ function spawnTarget() {
 
     gameCanvas.appendChild(target);
 }
-
-
-// hit target
 function hitTarget(target, event) {
     if (target.classList.contains('hit')) return;
 
     target.classList.add('hit');
     score += scorePerHit;
     hudScore.textContent = score;
-
-    // Popup skor
+    
     var popup = document.createElement('div');
     popup.className = 'score-popup';
     popup.textContent = '+' + scorePerHit;
@@ -327,37 +272,30 @@ function hitTarget(target, event) {
     popup.style.top = target.offsetTop + 'px';
     gameCanvas.appendChild(popup);
 
-    // Efek ledakan
     var boom = document.createElement('img');
     boom.className = 'boom-effect';
     boom.src = 'image/boom.png';
     boom.style.left = (target.offsetLeft + targetSize / 2) + 'px';
     boom.style.top = (target.offsetTop + targetSize / 2) + 'px';
     gameCanvas.appendChild(boom);
-
-    // Hapus setelah animasi
+    
     setTimeout(function () {
         target.remove();
         popup.remove();
         boom.remove();
     }, 500);
-
     triggerRecoil();
     triggerMuzzleFlash(event);
 }
 
-
-// miss
 function missShot(e) {
     timeLeft = Math.max(0, timeLeft - penaltySeconds);
     updateTimerDisplay();
-
     if (timeLeft <= 0) {
         gameOver();
         return;
     }
 
-    // Teks miss
     var canvasRect = gameCanvas.getBoundingClientRect();
     var missX = e.clientX - canvasRect.left;
     var missY = e.clientY - canvasRect.top;
@@ -368,8 +306,7 @@ function missShot(e) {
     miss.style.left = missX + 'px';
     miss.style.top = missY + 'px';
     gameCanvas.appendChild(miss);
-
-    // Flash merah
+    
     var flash = document.createElement('div');
     flash.className = 'penalty-flash';
     document.body.appendChild(flash);
@@ -383,8 +320,6 @@ function missShot(e) {
     triggerMuzzleFlash(e);
 }
 
-
-// efek senjata
 function triggerRecoil() {
     gunContainer.classList.remove('shooting');
     void gunContainer.offsetWidth; // paksa reflow
@@ -405,8 +340,6 @@ function triggerMuzzleFlash(e) {
     }, 100);
 }
 
-
-// ganti senjata
 function switchGun() {
     if (!isPlaying || isPaused) return;
 
@@ -422,8 +355,6 @@ function switchGun() {
     }, 400);
 }
 
-
-// pause dan resume
 function pauseGame() {
     if (!isPlaying || isPaused) return;
     isPaused = true;
@@ -443,8 +374,6 @@ function togglePause() {
     }
 }
 
-
-// game over
 function gameOver() {
     isPlaying = false;
     timeLeft = 0;
@@ -454,7 +383,6 @@ function gameOver() {
     clearInterval(spawnInterval);
     gamePointer.style.display = 'none';
 
-    // Tampilkan modal game over
     goUsername.textContent = username;
     goScore.textContent = score;
     goLevel.textContent = level.charAt(0).toUpperCase() + level.slice(1);
@@ -462,9 +390,6 @@ function gameOver() {
     saveScoreBtn.textContent = 'Save Score';
     gameoverModal.classList.remove('hidden');
 }
-
-
-// simpan skor
 function saveScore() {
     var record = {
         id: Date.now(),
@@ -475,13 +400,10 @@ function saveScore() {
         target: selectedTarget,
         date: new Date().toISOString()
     };
-
     matchHistory.push(record);
     localStorage.setItem('shooterMatchHistory', JSON.stringify(matchHistory));
-
     saveScoreBtn.textContent = '✓ Saved!';
     saveScoreBtn.disabled = true;
-
     renderLeaderboard();
 }
 
@@ -502,9 +424,6 @@ function restartGame() {
 
     welcomeScreen.classList.remove('hidden');
 }
-
-
-// quit
 function quitGame() {
     pauseModal.classList.add('hidden');
     gameArea.classList.add('hidden');
@@ -517,12 +436,8 @@ function quitGame() {
     isPlaying = false;
     isPaused = false;
     score = 0;
-
     welcomeScreen.classList.remove('hidden');
 }
-
-
-// leaderboard
 function renderLeaderboard() {
     var sortBy = sortSelect.value;
     var data = matchHistory.slice(); // copy array
@@ -534,7 +449,6 @@ function renderLeaderboard() {
     }
 
     leaderboardList.innerHTML = '';
-
     if (data.length === 0) {
         leaderboardList.innerHTML = '<div style="text-align:center;color:#888;padding:20px;font-size:0.85rem;">No matches yet</div>';
         return;
@@ -554,8 +468,6 @@ function renderLeaderboard() {
     }
 }
 
-
-// match detail
 function showMatchDetail(matchId) {
     var match = null;
     for (var i = 0; i < matchHistory.length; i++) {
@@ -567,7 +479,6 @@ function showMatchDetail(matchId) {
     if (!match) return;
 
     var dateStr = new Date(match.date).toLocaleString();
-
     var overlay = document.createElement('div');
     overlay.className = 'modal-overlay';
     overlay.id = 'detail-modal';
@@ -583,14 +494,11 @@ function showMatchDetail(matchId) {
             '</div>' +
         '</div>';
     document.body.appendChild(overlay);
-
     overlay.addEventListener('click', function (e) {
         if (e.target === overlay) overlay.remove();
     });
 }
 
-
-// match history
 function renderMatchHistory() {
     var sortBy = historySort.value;
     var data = matchHistory.slice();
@@ -602,7 +510,6 @@ function renderMatchHistory() {
     }
 
     historyList.innerHTML = '';
-
     if (data.length === 0) {
         historyList.innerHTML = '<div class="no-history">No match history yet. Play some games first!</div>';
         return;
@@ -622,18 +529,13 @@ function renderMatchHistory() {
         historyList.appendChild(el);
     }
 }
-
-
-// input game
 function setupGame() {
-    // Mouse gerak - pointer & senjata ikut
     document.addEventListener('mousemove', function (e) {
         if (!isPlaying) return;
 
         gamePointer.style.left = e.clientX + 'px';
         gamePointer.style.top = e.clientY + 'px';
 
-        // Gerakkan senjata ke arah mouse
         var canvasRect = gameCanvas.getBoundingClientRect();
         var centerX = canvasRect.left + canvasRect.width / 2;
         var deltaX = (e.clientX - centerX) / canvasRect.width;
@@ -642,7 +544,6 @@ function setupGame() {
         gunContainer.style.transform = 'translateX(' + translateX + 'px) rotate(' + rotateAngle + 'deg)';
     });
 
-    // Klik untuk tembak
     gameCanvas.addEventListener('click', function (e) {
         if (!isPlaying || isPaused) return;
 
@@ -651,8 +552,6 @@ function setupGame() {
             missShot(e);
         }
     });
-
-    // Keyboard
     document.addEventListener('keydown', function (e) {
         if (e.code === 'Space' && isPlaying) {
             e.preventDefault();
@@ -663,8 +562,6 @@ function setupGame() {
             togglePause();
         }
     });
-
-    // Tombol pause
     pauseBtn.addEventListener('click', function () {
         if (isPlaying) togglePause();
     });
